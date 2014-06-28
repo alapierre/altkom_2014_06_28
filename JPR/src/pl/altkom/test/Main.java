@@ -25,8 +25,6 @@ public class Main {
     
     public static void main(String[] args)  {
         
-        ResultSet rs = null;
-        
         try (Connection connection = DriverManager.getConnection("jdbc:derby://localhost:1527/sample",
                     "app",
                     "app")) {
@@ -54,6 +52,11 @@ public class Main {
             }
         }
         return res;
+    }
+    
+    public static Customer loadById() {
+        
+        return null;
     }
     
 }
