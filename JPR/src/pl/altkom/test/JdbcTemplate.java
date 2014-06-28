@@ -7,6 +7,7 @@
 package pl.altkom.test;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -17,12 +18,15 @@ import java.sql.Statement;
  */
 public class JdbcTemplate<T> {
     
-    T load(Connection connection, String sql, RowMapper<T> rowMapper) {
+    T load(Connection connection, String sql, int id, RowMapper<T> rowMapper) {
         
         try {
-            Statement stmt = connection.createStatement();
-
-            try (ResultSet rs = stmt.executeQuery(sql)) {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, id);
+            
+            stmt.execute();
+            
+            try (ResultSet rs = stmt.getResultSet()) {
                 rs.next();
                 return rowMapper.mapRow(rs);
             }

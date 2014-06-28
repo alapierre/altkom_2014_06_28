@@ -22,10 +22,12 @@ public class TestJdbcTemplate {
         try (Connection connection = DriverManager.getConnection("jdbc:derby://localhost:1527/sample",
                     "app",
                     "app")) {
-        
+       
             JdbcTemplate<Customer> jdbc = new JdbcTemplate<>();
             
-            Customer res = jdbc.load(connection, "select * from customer where customer_id = 1", new RowMapper<Customer>() {
+            int id = 1;
+            
+            Customer res = jdbc.load(connection, "select * from customer where customer_id = ?", 1, new RowMapper<Customer>() {
                 
                 @Override
                 public Customer mapRow(ResultSet rs) throws SQLException{
