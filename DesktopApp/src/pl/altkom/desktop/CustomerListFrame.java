@@ -18,9 +18,34 @@ import pl.altkom.desktop.model.Customer;
  */
 public class CustomerListFrame extends javax.swing.JFrame {
 
-    private Customer customer = new Customer();
-
+    private Customer customer ;
+    
     public static final String PROP_CUSTOMER = "customer";
+    
+    private Customer selectedCustomer;
+
+    public static final String PROP_SELECTEDCUSTOMER = "selectedCustomer";
+
+    /**
+     * Get the value of selectedCustomer
+     *
+     * @return the value of selectedCustomer
+     */
+    public Customer getSelectedCustomer() {
+        return selectedCustomer;
+    }
+
+    /**
+     * Set the value of selectedCustomer
+     *
+     * @param selectedCustomer new value of selectedCustomer
+     */
+    public void setSelectedCustomer(Customer selectedCustomer) {
+        Customer oldSelectedCustomer = this.selectedCustomer;
+        this.selectedCustomer = selectedCustomer;
+        firePropertyChange(PROP_SELECTEDCUSTOMER, oldSelectedCustomer, selectedCustomer);
+    }
+
     
     private ObservableList<Customer> customerList 
             = ObservableCollections.observableList(new ArrayList<Customer>());
@@ -59,8 +84,8 @@ public class CustomerListFrame extends javax.swing.JFrame {
      */
     public CustomerListFrame() {
         initComponents();
-        
-        customerList.add(customer);
+        customer = new Customer();
+        //customerList.add(customer);
     }
 
     /**
@@ -82,6 +107,7 @@ public class CustomerListFrame extends javax.swing.JFrame {
         jCheckBox1 = new javax.swing.JCheckBox();
         jLabel3 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
@@ -119,6 +145,13 @@ public class CustomerListFrame extends javax.swing.JFrame {
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${customer.corporate}"), jTextField3, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
 
+        jButton2.setText("Edytuj");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -128,6 +161,8 @@ public class CustomerListFrame extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton2)
+                        .addGap(18, 18, 18)
                         .addComponent(jButton1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -162,7 +197,9 @@ public class CustomerListFrame extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
-                .addComponent(jButton1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
                 .addContainerGap())
         );
 
@@ -181,7 +218,7 @@ public class CustomerListFrame extends javax.swing.JFrame {
         columnBinding.setColumnName("czy firma");
         columnBinding.setColumnClass(Boolean.class);
         bindingGroup.addBinding(jTableBinding);
-        jTableBinding.bind();binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${customer}"), jTable1, org.jdesktop.beansbinding.BeanProperty.create("selectedElement"));
+        jTableBinding.bind();binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${selectedCustomer}"), jTable1, org.jdesktop.beansbinding.BeanProperty.create("selectedElement"));
         bindingGroup.addBinding(binding);
 
         jScrollPane1.setViewportView(jTable1);
@@ -225,6 +262,18 @@ public class CustomerListFrame extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        
+        System.out.println("edit");
+        
+        setCustomer(selectedCustomer);
+        
+        System.out.println(customer);
+        
+        //customerList.add(customer);
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -256,6 +305,7 @@ public class CustomerListFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
