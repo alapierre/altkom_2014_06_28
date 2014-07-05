@@ -46,7 +46,7 @@ public class TcpServer {
                 }
                 System.out.println("responce sent");
 
-            } while(!clientSentence.equals("end"));
+            } while(!"end".equals(clientSentence));
             
             System.out.println("close client connection");
             
